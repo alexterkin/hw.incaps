@@ -29,4 +29,13 @@ public class SearchEngine {
             }
         }
     }
+
+    public Searchable getSearchTerm(String search) {
+        int quantity = 0;
+        int index = 0;
+        int indexSubstring = str.indexOf(search, index);
+        for(Searchable searchable : searchables) {
+            searchable.
+        }
+    }
 }
