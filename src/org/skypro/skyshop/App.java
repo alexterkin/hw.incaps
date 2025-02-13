@@ -48,5 +48,23 @@ public class App {
         System.out.println("Поиск " + clientRequest3 + ": " + Arrays.toString(searchEngine.search(clientRequest3)));
         String clientRequest4 = "Бутерброд";
         System.out.println("Поиск " + clientRequest4 + ": " + Arrays.toString(searchEngine.search(clientRequest4)));
+
+        try {
+            basket.addProduct(new SimpleProduct("  ", 0));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            basket.addProduct(new SimpleProduct("Яблоко", -150));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            basket.addProduct(new DiscountedProduct("Картофель", 85, 120));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
