@@ -4,7 +4,7 @@ import org.skypro.skyshop.product.Product;
 import java.util.Arrays;
 
 public class ProductBasket {
-    private final Product[] products = new Product[5];
+    private final Product[] products = new Product[10];
     private int counter = 0;
 
     public void addProduct(Product product) {
