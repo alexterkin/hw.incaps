@@ -10,7 +10,7 @@ public class SearchEngine {
     }
 
     public Searchable[] search(String clientRequest) {
-        Searchable[] result = new Searchable[5];
+        Searchable[] result = new Searchable[10];
         int position = 0;
         for(Searchable searchable : searchables) {
             if(searchable != null && searchable.getSearchTerm().contains(clientRequest)) {

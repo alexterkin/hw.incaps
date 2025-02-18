@@ -22,7 +22,7 @@ public class App {
 
         basket.printBasket();
 
-        SearchEngine searchEngine = new SearchEngine(5);
+        SearchEngine searchEngine = new SearchEngine(10);
         Searchable sausage = new SimpleProduct("Колбаса", 280);
         Searchable cheese = new DiscountedProduct("Сыр", 250, 15);
         Searchable butter = new FixPriceProduct("Масло");
@@ -72,5 +72,12 @@ public class App {
         searchEngine.add(aboutLemon);
 
         searchEngine.getBestMatch("пищеварение");
+
+        try {
+            searchEngine.getBestMatch("витамины");
+        } catch (BestResultNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
