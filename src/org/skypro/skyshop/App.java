@@ -2,6 +2,7 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exceptions.BestResultNotFoundException;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
@@ -11,7 +12,7 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.Arrays;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BestResultNotFoundException {
         ProductBasket basket = new ProductBasket();
         basket.addProduct(new SimpleProduct("Колбаса", 280));
         basket.addProduct(new DiscountedProduct("Сыр", 250, 15));
@@ -21,7 +22,7 @@ public class App {
 
         basket.printBasket();
 
-        SearchEngine searchEngine = new SearchEngine(5);
+        SearchEngine searchEngine = new SearchEngine(10);
         Searchable sausage = new SimpleProduct("Колбаса", 280);
         Searchable cheese = new DiscountedProduct("Сыр", 250, 15);
         Searchable butter = new FixPriceProduct("Масло");
@@ -48,5 +49,35 @@ public class App {
         System.out.println("Поиск " + clientRequest3 + ": " + Arrays.toString(searchEngine.search(clientRequest3)));
         String clientRequest4 = "Бутерброд";
         System.out.println("Поиск " + clientRequest4 + ": " + Arrays.toString(searchEngine.search(clientRequest4)));
+
+        try {
+            basket.addProduct(new SimpleProduct("  ", 0));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            basket.addProduct(new SimpleProduct("Яблоко", -150));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            basket.addProduct(new DiscountedProduct("Картофель", 85, 120));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        Article aboutLemon = new Article("Польза лимона", "Лимон улучшает пищеварение");
+        searchEngine.add(aboutLemon);
+
+        searchEngine.getBestMatch("пищеварение");
+
+        try {
+            searchEngine.getBestMatch("витамины");
+        } catch (BestResultNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
