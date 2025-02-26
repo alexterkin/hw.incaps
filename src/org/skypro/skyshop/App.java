@@ -5,11 +5,11 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.exceptions.BestResultNotFoundException;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
-
-import java.util.Arrays;
+import java.util.LinkedList;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFoundException {
@@ -42,13 +42,13 @@ public class App {
         searchEngine.add(aboutCheese);
 
         String clientRequest1 = "Хлеб";
-        System.out.println("Поиск " + clientRequest1 + ": " + Arrays.toString(searchEngine.search(clientRequest1)));
+        System.out.println("Поиск " + clientRequest1 + ": " + searchEngine.search(clientRequest1));
         String clientRequest2 = "Сыр";
-        System.out.println("Поиск " + clientRequest2 + ": " + Arrays.toString(searchEngine.search(clientRequest2)));
+        System.out.println("Поиск " + clientRequest2 + ": " + searchEngine.search(clientRequest2));
         String clientRequest3 = "Одежда";
-        System.out.println("Поиск " + clientRequest3 + ": " + Arrays.toString(searchEngine.search(clientRequest3)));
+        System.out.println("Поиск " + clientRequest3 + ": " + searchEngine.search(clientRequest3));
         String clientRequest4 = "Бутерброд";
-        System.out.println("Поиск " + clientRequest4 + ": " + Arrays.toString(searchEngine.search(clientRequest4)));
+        System.out.println("Поиск " + clientRequest4 + ": " + searchEngine.search(clientRequest4));
 
         try {
             basket.addProduct(new SimpleProduct("  ", 0));
@@ -78,6 +78,15 @@ public class App {
         } catch (BestResultNotFoundException e) {
             System.out.println(e.getMessage());
         }
+
+        LinkedList<Product> deletedProducts = basket.deleteProductByName("Сыр");
+        for (Product product: deletedProducts) {
+            System.out.println(product);
+        }
+
+        basket.printBasket();
+
+        basket.deleteProductByName("Лимон");
 
     }
 }
