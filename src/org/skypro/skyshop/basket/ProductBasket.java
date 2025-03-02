@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class ProductBasket {
-    LinkedList<Product> products = new LinkedList<>();
+    private final LinkedList<Product> products = new LinkedList<>();
     private int counter = 0;
 
     public void addProduct(Product product) {

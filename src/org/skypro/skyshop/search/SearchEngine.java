@@ -5,7 +5,7 @@ import org.skypro.skyshop.exceptions.BestResultNotFoundException;
 import java.util.LinkedList;
 
 public class SearchEngine {
-    LinkedList<Searchable> searchables;
+    private final LinkedList<Searchable> searchables;
     private int counter = 0;
 
     public SearchEngine(int size) {
