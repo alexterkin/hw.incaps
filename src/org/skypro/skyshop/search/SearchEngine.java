@@ -2,34 +2,29 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exceptions.BestResultNotFoundException;
 
+import java.util.LinkedList;
+
 public class SearchEngine {
-    private final Searchable[] searchables;
+    private final LinkedList<Searchable> searchables;
+    private int counter = 0;
 
     public SearchEngine(int size) {
-        this.searchables = new Searchable[size];
+        this.searchables = new LinkedList<>();
     }
 
-    public Searchable[] search(String clientRequest) {
-        Searchable[] result = new Searchable[10];
-        int position = 0;
+    public LinkedList<Searchable> search(String clientRequest) {
+        LinkedList<Searchable> result = new LinkedList<>();
         for(Searchable searchable : searchables) {
             if(searchable != null && searchable.getSearchTerm().contains(clientRequest)) {
-                result[position++] = searchable;
-            }
-            if(position == result.length - 1) {
-                break;
+                result.add(searchable);
             }
         }
         return result;
     }
 
     public void add(Searchable searchable) {
-        for (int i = 0; i < searchables.length; i++) {
-            if(searchables[i] == null) {
-                searchables[i] = searchable;
-                return;
-            }
-        }
+        searchables.add(searchable);
+        counter++;
     }
 
     public Searchable getBestMatch(String search) throws BestResultNotFoundException {
@@ -58,5 +53,13 @@ public class SearchEngine {
             index = index + search.length();
         }
         return count;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 }
