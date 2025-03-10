@@ -3,6 +3,9 @@ package org.skypro.skyshop.search;
 import org.skypro.skyshop.exceptions.BestResultNotFoundException;
 
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class SearchEngine {
     private final LinkedList<Searchable> searchables;
@@ -12,11 +15,11 @@ public class SearchEngine {
         this.searchables = new LinkedList<>();
     }
 
-    public LinkedList<Searchable> search(String clientRequest) {
-        LinkedList<Searchable> result = new LinkedList<>();
+    public Map<String, Searchable> search(String clientRequest) {
+        Map<String, Searchable> result = new TreeMap<>();
         for(Searchable searchable : searchables) {
             if(searchable != null && searchable.getSearchTerm().contains(clientRequest)) {
-                result.add(searchable);
+                result.put(searchable.getSearchTerm(), searchable);
             }
         }
         return result;
@@ -27,7 +30,7 @@ public class SearchEngine {
         counter++;
     }
 
-    public Searchable getBestMatch(String search) throws BestResultNotFoundException {
+    public void getBestMatch(String search) throws BestResultNotFoundException {
         Searchable candidate = null;
         int candidateCount = 0;
         for(Searchable searchable : searchables) {
@@ -42,7 +45,6 @@ public class SearchEngine {
         if(candidate == null) {
             throw new BestResultNotFoundException("Результат не найден");
         }
-        return candidate;
     }
 
     private int countMatches(String source, String search) {

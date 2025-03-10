@@ -10,6 +10,7 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFoundException {
@@ -87,6 +88,12 @@ public class App {
         basket.printBasket();
 
         basket.deleteProductByName("Лимон");
+
+        String clientRequest = "Сыр";
+        Map<String, Searchable> searchResults = searchEngine.search(clientRequest);
+        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
+            System.out.println("Ключ: " + entry.getKey() + ". Значение " + entry.getValue());
+        }
 
     }
 }
