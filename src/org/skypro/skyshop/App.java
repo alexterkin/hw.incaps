@@ -10,7 +10,7 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 import java.util.LinkedList;
-import java.util.Map;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) throws BestResultNotFoundException {
@@ -23,24 +23,30 @@ public class App {
 
         basket.printBasket();
 
-        SearchEngine searchEngine = new SearchEngine(10);
+        SearchEngine searchEngine = new SearchEngine();
         Searchable sausage = new SimpleProduct("Колбаса", 280);
         Searchable cheese = new DiscountedProduct("Сыр", 250, 15);
         Searchable butter = new FixPriceProduct("Масло");
         Searchable milk = new DiscountedProduct("Молоко", 140, 15);
         Searchable bread = new FixPriceProduct("Хлеб");
+        Searchable milkOld = new SimpleProduct("Молоко топлёное", 175);
         searchEngine.add(sausage);
         searchEngine.add(cheese);
         searchEngine.add(butter);
         searchEngine.add(milk);
         searchEngine.add(bread);
+        searchEngine.add(milkOld);
 
+        Article aboutWhiteBread = new Article("Хлеб белый", "Часто используется для бутербродов");
         Article aboutBread = new Article("Хлеб", "Хлеб всему голова");
         Article aboutButter = new Article("Масло", "Бутерброд вкуснее с маслом");
         Article aboutCheese = new Article("Сыр", "Сыр бывает с плесенью");
+        Article aboutMilk = new Article("Молоко пастеризованное", "Специально обработанное молоко");
+        searchEngine.add(aboutWhiteBread);
         searchEngine.add(aboutBread);
         searchEngine.add(aboutButter);
         searchEngine.add(aboutCheese);
+        searchEngine.add(aboutMilk);
 
         String clientRequest1 = "Хлеб";
         System.out.println("Поиск " + clientRequest1 + ": " + searchEngine.search(clientRequest1));
@@ -89,11 +95,10 @@ public class App {
 
         basket.deleteProductByName("Лимон");
 
-        String clientRequest = "Сыр";
-        Map<String, Searchable> searchResults = searchEngine.search(clientRequest);
-        for (Map.Entry<String, Searchable> entry : searchResults.entrySet()) {
-            System.out.println("Ключ: " + entry.getKey() + ". Значение " + entry.getValue());
+        String clientRequest = "Молоко";
+        Set<Searchable> searchResults = searchEngine.search(clientRequest);
+        for (Searchable entry : searchResults) {
+            System.out.println("Имя продукта: " + entry.getName());
         }
-
     }
 }
