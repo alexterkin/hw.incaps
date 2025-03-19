@@ -26,33 +26,31 @@ public class ProductBasket {
     }
 
     public double getTotalCost() {
-      double sum = 0;
-      for (List <Product> products: productMap.values()) {
-          for (Product product: products) {
-              sum += product.getPrice();
-          }
-      }
-      return sum;
+        return productMap.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product -> (int) Math.round(Product.getPrice())).sum();
+    }
+
+    private int getSpecialCount() {
+        return (int) productMap.values()
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public void printBasket() {
-        int counter = 0;
-        System.out.println("В корзине пусто ");
-        double totalPrice = 0;
-        int countSpecialProduct = 0;
-        for (List <Product> products: productMap.values()) {
-            for (Product product: products) {
-                if (product != null) {
-                    System.out.println(product);
-                    totalPrice += product.getPrice();
-                    if(product.isSpecial()) {
-                        countSpecialProduct++;
-                    }
-                }
-            }
+        if (productMap.isEmpty()) {
+            System.out.println("В корзине пусто ");
+        } else {
+            productMap.values()
+                    .stream()
+                    .flatMap(Collection::stream)
+                    .forEach(System.out::println);
+            System.out.println("Итого: " + getTotalCost());
+            System.out.println("Специальных товаров: " + getSpecialCount());
         }
-        System.out.println("Итого: " + totalPrice);
-        System.out.println("Специальных товаров: " + countSpecialProduct);
     }
 
     public boolean findByName(String name) {
@@ -63,3 +61,4 @@ public class ProductBasket {
         productMap.clear();
     }
 }
+
