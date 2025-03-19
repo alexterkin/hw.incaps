@@ -16,10 +16,12 @@ public class App {
     public static void main(String[] args) throws BestResultNotFoundException {
         ProductBasket basket = new ProductBasket();
         basket.addProduct(new SimpleProduct("Колбаса", 280));
-        basket.addProduct(new DiscountedProduct("Сыр", 250, 15));
         basket.addProduct(new FixPriceProduct("Масло"));
         basket.addProduct(new DiscountedProduct("Молоко", 140, 15));
+        basket.addProduct(new SimpleProduct("Молоко топлёное", 175));
+        basket.addProduct(new DiscountedProduct("Сыр", 250, 15));
         basket.addProduct(new FixPriceProduct("Хлеб"));
+        basket.addProduct(new DiscountedProduct("Колбаса варёная", 320, 10));
 
         basket.printBasket();
 
